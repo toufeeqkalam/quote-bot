@@ -18,9 +18,9 @@ module.exports.quote = async (event, callback) => {
 
     if (_.eq(event.invocationSource, 'DialogCodeHook')) {
 
-        let result = validateSlots(slots, sessionAttributes, intentName, callback);
-        if (!result.isValid) {
-            slots[`${result.violatedSlot}`] = null;
+        let validationResult = validateSlots(slots, sessionAttributes, intentName, callback);
+        if (!validationResult.isValid) {
+            slots[`${validationResult.violatedSlot}`] = null;
             return callback(dialog.elicitSlot(sessionAttributes, intentName, slots, validationResult.violatedSlot, validationResult.message));
         }
 
